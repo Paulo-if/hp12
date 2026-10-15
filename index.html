@@ -281,6 +281,58 @@
       pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'index.html');
 
     </script>
+
+    <script type="text/javascript">
+      /* Gira a calculadora 90° quando o dispositivo estiver em retrato
+         (celular), fazendo-a ocupar a tela "de lado". */
+      (function () {
+        var el = document.getElementById('pointer_div');
+        var DESIGN_W = 600;
+        var DESIGN_H = 375;
+        var query = window.matchMedia('(orientation: portrait) and (max-width: 900px)');
+
+        function fit() {
+          if (!el) {
+            el = document.getElementById('pointer_div');
+            if (!el) return;
+          }
+
+          if (!query.matches) {
+            el.style.position = '';
+            el.style.top = '';
+            el.style.left = '';
+            el.style.transformOrigin = '';
+            el.style.transform = '';
+            return;
+          }
+
+          var vw = window.innerWidth;
+          var vh = window.innerHeight;
+          /* depois de girado, a largura visual é DESIGN_H e a altura DESIGN_W */
+          var s = Math.min(vw / DESIGN_H, vh / DESIGN_W) * 0.98;
+
+          el.style.position = 'absolute';
+          el.style.top = '50%';
+          el.style.left = '50%';
+          el.style.transformOrigin = 'center center';
+          el.style.transform = 'translate(-50%, -50%) rotate(90deg) scale(' + s + ')';
+        }
+
+        window.addEventListener('load', fit);
+        window.addEventListener('resize', fit);
+        window.addEventListener('orientationchange', fit);
+        if (query.addEventListener) {
+          query.addEventListener('change', fit);
+        } else if (query.addListener) {
+          query.addListener(fit);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          setTimeout(fit, 0);
+        }
+        fit();
+      })();
+    </script>
 </body>
 
 </html>

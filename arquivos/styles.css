@@ -204,11 +204,6 @@ img#cross {
 }
 
 @media screen and (min-width: 375px) and (max-width: 429px) {
-div#pointer_div {
-    transform-origin: 0% 50% !important;
-    transform: scale(0.60) !important;
-}
-
 h1 {
   margin-bottom: -40px;
 }
@@ -336,5 +331,26 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+/* ==============================
+   MOBILE EM RETRATO – CALCULADORA DE LADO
+   ============================== */
+
+/* Em telas de celular na vertical, a calculadora é girada 90°
+   (o "fit" fino é calculado via JS para ocupar a tela toda). */
+@media (orientation: portrait) and (max-width: 900px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background: #000;
+  }
+
+  .spacer {
+    padding: 0;
+    height: 0;
+  }
 }
 
